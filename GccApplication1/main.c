@@ -108,3 +108,108 @@ int main(void)
 		_delay_ms(10);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//RFM95(LORA) SPI통신코드(수정필요) **주의
+
+//Digital INPUT.
+setbit(DDR_RFM_MISO, N_RFM_MISO);
+
+//Digital OUTPUT.
+setbit(DDR_RFM_MOSI, N_RFM_MOSI);
+setbit(DDR_RFM_SCK, N_RFM_SCK);
+setbit(DDR_RFM_Reset, N_RFM_Reset);
+setbit(DDR_RFM_CS, N_RFM_CS);
+
+//Digital OUTPUT 초기값 High
+setbit(PORT_RFM_Reset, N_RFM_Reset);
+setbit(PORT_RFM_CS, N_RFM_CS);
+
+//SPI 인터럽트 비활성화, SPI 활성화, MSB 먼저 전송, 마스터, CPOL=0, CPHA=0, 8분주(1MHz) **
+SPCR = (0<<SPIE) | (1<<SPE) | (0<<DORD) | (1<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (1<<SPR0);
+SPSR = (1<<SPI2X);
+
+//RFM95 리셋
+clearbit(PORT_RFM_Reset, N_RFM_Reset);   _delay_ms(10);
+setbit(PORT_RFM_Reset, N_RFM_Reset);   _delay_ms(10);
+
+//Sleep 모드
+RFM_Write(RegOpMode, 0b00001000);   _delay_ms(10);
+if(RFM_Read(RegOpMode) != 0b00001000) return 1;
+
+
+//**
+uint8_t   RFM_Write(uint8_t address, uint8_t data){
+	//해당 주소에 데이터를 쓰고, 쓰기 이전 데이터를 반환한다.
+	
+	clearbit(PORT_RFM_CS, N_RFM_CS);   //CS 설정
+	SPDR = (address | 0b10000000);      //전송 레지스터에 데이터 입력
+	while(!(SPSR & (1<<SPIF)));         //전송 완료 플래그가 세워질 때 까지 대기.
+	SPDR = data;                  //전송 레지스터에 데이터 입력
+	while(!(SPSR & (1<<SPIF)));         //전송 완료 플래그가 세워질 때 까지 대기.
+	setbit(PORT_RFM_CS, N_RFM_CS);      //CS 해제
+	return SPDR;                  //전송 레지스터에 대치된 수신데이터 반환
+}
+
+uint8_t   RFM_Read(uint8_t address){
+	//해당 주소의 데이터를 불러온다.
+	
+	clearbit(PORT_RFM_CS, N_RFM_CS);   //CS 설정
+	SPDR = address;                  //전송 레지스터에 데이터 입력
+	while(!(SPSR & (1<<SPIF)));         //전송 완료 플래그가 세워질 때 까지 대기.
+	SPDR = 0x00;                  //전송 레지스터에 데이터 입력
+	while(!(SPSR & (1<<SPIF)));         //전송 완료 플래그가 세워질 때 까지 대기.
+	setbit(PORT_RFM_CS, N_RFM_CS);      //CS 해제
+	return SPDR;                  //전송 레지스터에 대치된 수신데이터 반환
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include "EEPROM.h"
+
+static void eeprom_write(uint16_t _addr, uint8_t _data)
+{
+	while(EECR & (1<<EEPE));
+	EEARH = _addr>>8;
+	EEARL = _addr;
+	EEDR = _data;
+	EECR |= (1<<EEMPE);
+	EECR |= (1<<EEPE);
+}
+
+uint8_t eeprom_read(uint16_t _addr)
+{
+	while(EECR & (1<<EEPE));
+	EEARH = _addr>>8;
+	EEARL = _addr;
+	EECR |= (1<<EERE);
+	return EEDR;
+}
+
+void eeprom_update(uint16_t _addr, uint8_t _data)
+{
+	if(_data != eeprom_read(_addr)) eeprom_write(_addr,_data);
+}
+
+void eeprom_write_i16(uint16_t _addr,int16_t _data)
+{
+	union{
+		int16_t A;
+		uint8_t a[2];
+	}VAL;
+	VAL.A = _data;
+	//  eeprom_write(_addr,VAL.a[0]);
+	//  eeprom_write(_addr + 1,VAL.a[1]);
+	eeprom_update(_addr,VAL.a[0]);
+	eeprom_update(_addr + 1,VAL.a[1]);
+}
+
+int16_t eeprom_read_i16(uint16_t _addr)
+{
+	union{
+		int16_t A;
+		uint8_t a[2];
+	}VAL;
+	VAL.a[0] = eeprom_read(_addr);
+	VAL.a[1] = eeprom_read(_addr + 1);
+	return VAL.A;
