@@ -9,7 +9,6 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-
 #define __DELAY_BACKWARD_COMPATIBLE__		//_delay_ms에서 변수를 인자로 사용할 수 있게 한다.
 
 #define setbit(x,y)		(x |= (1 << y))		//X포트의 Y번 비트를 1로 설정.
@@ -33,6 +32,8 @@ int main(void)
 	}
 }
 
+
+//인터럽트
 void EXTI_Init(){
 	sei();                  //글로벌 인터럽트 활성화
 	DDRB=0b00000000;		//입력으로 세팅
@@ -42,7 +43,6 @@ void EXTI_Init(){
 	setbit(GICR, INT0);		//EXTI0 활성화.
 }
 
-
 ISR(INT0_vect){
 	
 }
@@ -50,7 +50,7 @@ ISR(INT0_vect){
 ISR(BADISR_vect) {}
 
 
-
+//Timer
 void Timer_Init(uint32_t fosc){
 	//Timer0 -> millis
 	clearbit(TCCR0, CS02);								//64분주
@@ -68,17 +68,7 @@ ISR(TIMER0_OVF_vect){
 }
 
 
-
-
-
-
-
-
-
-#include <util/delay.h>      //_delay_us(), _delay_ms() 등이 포함된 헤더.
-#include <math.h>
-#include <time.h>
-
+//USART
 void USART_Transmit_char(char data){				//8비트 데이터를 송신하는 함수
 	while(!(UCSRA & (1<<UDRE)));					//UDRE0 비트가 1이 되면
 	UDR = data;										//UDR에 데이터를 전송한다.
@@ -110,7 +100,7 @@ void USART_Transmit_int(long value){				//음수라면 -먼저 출력 후 반전
 void USART_Init(uint32_t fosc, uint16_t bps){
 	uint16_t temp;									//bps 계산 공간
 	UCSRB = (1<<RXEN) | (1<<TXEN);
-	temp = fosc/(bps*16) - 1;					//UBBR에 넣을 bps값 계산
+	temp = fosc/(bps*16) - 1;						//UBBR에 넣을 bps값 계산
 	UBRRH = (temp>>8) & 0b11111111;					//UBRR0H에 bps값 대입
 	UBRRL = temp & 0b11111111;						//UBRR0L에 bps값 대입
 }
