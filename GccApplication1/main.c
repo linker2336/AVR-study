@@ -75,48 +75,42 @@ ISR(TIMER0_OVF_vect){
 
 
 
-//Fusebit L = 0xFF, H = 0xD1 (외부클럭(16MHz), EEPROMSAVE)
-//형식지정자 : (작음) %d, %ld, %lld, %lu (큼), (실수형->) %f, %lf, %Lf
-/*********************************************************************************/
-
-
 #include <util/delay.h>      //_delay_us(), _delay_ms() 등이 포함된 헤더.
 #include <math.h>
 #include <time.h>
 
-void USART_Transmit_char(char data){         //8비트 데이터를 송신하는 함수
-	while(!(UCSR0A & (1<<UDRE0)));            //UDRE0 비트가 1이 되면
-	_delay_us(1);                        //글자깨짐 방지로 잠깐 기다리고
-	UDR0 = data;                        //UDR에 데이터를 전송한다.
+void USART_Transmit_char(char data){				//8비트 데이터를 송신하는 함수
+	while(!(UCSRA & (1<<UDRE)));					//UDRE0 비트가 1이 되면
+	UDR = data;										//UDR에 데이터를 전송한다.
 }
 
 void USART_Transmit_String(char *str){
-	while(*str != 0) USART_Transmit_char(*str++);   //8비트씩 끊어서 데이터를 송신한다.
+	while(*str != 0) USART_Transmit_char(*str++);	//8비트씩 끊어서 데이터를 'USART_Transmit_char'로 던진다.
 	//NULL(문자열의 끝)을 만날 때 까지 반복한다.
 }
 
-void USART_Transmit_int(long value){
+void USART_Transmit_int(long value){				//음수라면 -먼저 출력 후 반전
 	if ( value < 0 ) {
 		USART_Transmit_String ( "-" );
-		value = - value;
+		value = -value;
 	}
 	uint8_t length = 0;
-	for ( uint8_t i = 0 ; i < 100 ; i ++ ) {
-		if ( value / pow ( 10 , i ) < 10 ) {
+	for ( uint8_t i=0; i<100; i++ ){				//자릿수를 length에 저장
+		if (value/pow( 10 , i ) < 10 ) {
 			length = i + 1;
 			break;
 		}
 	}
-	for ( uint8_t i = 1 ; i <= length ; i ++ ) {
-		uint8_t a = value / pow ( 10 , length - i ) - ( uint8_t ) ( value / pow ( 10 , ( length - i ) + 1 ) ) * 10;
-		USART_Transmit_char ( a + 0x30 );
+	for ( uint8_t i=1; i<=length; i++) {
+		uint8_t a = value/pow(10, length-i) - (uint8_t)(value/pow(10, (length-i) + 1))*10;
+		USART_Transmit_char(a+0x30);				//아스키값으로 변환
 	}
 }
 
 void USART_Init(uint32_t fosc, uint16_t bps){
-	uint16_t temp;               //bps 계산 공간
-	UCSR0B = (1<<RXEN0) | (1<<TXEN0);
-	temp = fosc / (bps * 16) - 1;      //UBBR에 넣을 bps값 계산
-	UBRR0H = (temp>>8) & 0b11111111;   //UBRR0H에 bps값 대입
-	UBRR0L = temp & 0b11111111;         //UBRR0L에 bps값 대입
+	uint16_t temp;									//bps 계산 공간
+	UCSRB = (1<<RXEN) | (1<<TXEN);
+	temp = fosc/(bps*16) - 1;					//UBBR에 넣을 bps값 계산
+	UBRRH = (temp>>8) & 0b11111111;					//UBRR0H에 bps값 대입
+	UBRRL = temp & 0b11111111;						//UBRR0L에 bps값 대입
 }
