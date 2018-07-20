@@ -17,20 +17,6 @@
 unsigned char TIMER0_OVF_COMPENSATE;
 unsigned long millis=0;
 
-int main(void)
-{
-	// 	DDRB=0XFF;
-	EXTI_Init();
-	Timer_Init(F_CPU);
-	while (1)
-	{
-		// 		PORTB = 0b00001111;
-		// 		_delay_ms(1000);
-		// 		PORTB = 0b11110000;
-		// 		_delay_ms(1000);
-		
-	}
-}
 
 
 //인터럽트
@@ -103,4 +89,22 @@ void USART_Init(uint32_t fosc, uint16_t bps){
 	temp = fosc/(bps*16) - 1;						//UBBR에 넣을 bps값 계산
 	UBRRH = (temp>>8) & 0b11111111;					//UBRR0H에 bps값 대입
 	UBRRL = temp & 0b11111111;						//UBRR0L에 bps값 대입
+}
+
+
+int main(void)
+{
+	// 	DDRB=0XFF;
+	EXTI_Init();
+	Timer_Init(F_CPU);
+	USART_Init(F_CPU, 2400);
+	while (1)
+	{
+		// 		PORTB = 0b00001111;
+		// 		_delay_ms(1000);
+		// 		PORTB = 0b11110000;
+		// 		_delay_ms(1000);
+		USART_Transmit_char('A');
+		_delay_ms(10);
+	}
 }

@@ -3,51 +3,55 @@ GccApplication1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000003e  00000000  00000000  00000054  2**1
+  0 .text         0000019a  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00800060  00800060  00000092  2**0
+  1 .data         00000000  00800060  00800060  0000020e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .comment      00000030  00000000  00000000  00000092  2**0
+  2 .bss          00000005  00800060  00800060  0000020e  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000020e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000000c4  2**2
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000240  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000028  00000000  00000000  00000100  2**0
+  5 .debug_aranges 00000068  00000000  00000000  0000027c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00000557  00000000  00000000  00000128  2**0
+  6 .debug_info   000008a8  00000000  00000000  000002e4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000004f1  00000000  00000000  0000067f  2**0
+  7 .debug_abbrev 000006a1  00000000  00000000  00000b8c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   000001d8  00000000  00000000  00000b70  2**0
+  8 .debug_line   000003e8  00000000  00000000  0000122d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000034  00000000  00000000  00000d48  2**2
+  9 .debug_frame  00000144  00000000  00000000  00001618  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000002cb  00000000  00000000  00000d7c  2**0
+ 10 .debug_str    000003c7  00000000  00000000  0000175c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000018  00000000  00000000  00001047  2**0
+ 11 .debug_loc    000003e8  00000000  00000000  00001b23  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000088  00000000  00000000  00001f0b  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
-   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
-   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
-   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
-   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
-   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
-   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
-   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
-  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
-  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
-  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
-  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
-  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
-  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
-  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
-  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
-  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
-  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
-  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+   2:	3b c0       	rjmp	.+118    	; 0x7a <__vector_1>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	5d c0       	rjmp	.+186    	; 0xce <__vector_9>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
 
 00000026 <__ctors_end>:
   26:	11 24       	eor	r1, r1
@@ -56,23 +60,241 @@ Disassembly of section .text:
   2c:	d4 e0       	ldi	r29, 0x04	; 4
   2e:	de bf       	out	0x3e, r29	; 62
   30:	cd bf       	out	0x3d, r28	; 61
-  32:	02 d0       	rcall	.+4      	; 0x38 <main>
-  34:	02 c0       	rjmp	.+4      	; 0x3a <_exit>
 
-00000036 <__bad_interrupt>:
-  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ea e9       	ldi	r30, 0x9A	; 154
+  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a0 36       	cpi	r26, 0x60	; 96
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
 
-00000038 <main>:
-#define setbit(x,y)		(x |= (1 << y))		//X포트의 Y번 비트를 1로 설정.
-#define clearbit(x,y)	(x &= ~(1 << y))	//X포트의 Y번 비트를 0으로 설정.
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	a0 e6       	ldi	r26, 0x60	; 96
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a5 36       	cpi	r26, 0x65	; 101
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	67 d0       	rcall	.+206    	; 0x128 <main>
+  5a:	9d c0       	rjmp	.+314    	; 0x196 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	18 c0       	rjmp	.+48     	; 0x8e <__vector_default>
+
+0000005e <EXTI_Init>:
+void USART_Init(uint32_t fosc, uint16_t bps){
+	uint16_t temp;									//bps 계산 공간
+	UCSRB = (1<<RXEN) | (1<<TXEN);
+	temp = fosc/(bps*16) - 1;						//UBBR에 넣을 bps값 계산
+	UBRRH = (temp>>8) & 0b11111111;					//UBRR0H에 bps값 대입
+	UBRRL = temp & 0b11111111;						//UBRR0L에 bps값 대입
+  5e:	78 94       	sei
+  60:	17 ba       	out	0x17, r1	; 23
+  62:	8f ef       	ldi	r24, 0xFF	; 255
+  64:	88 bb       	out	0x18, r24	; 24
+  66:	84 b7       	in	r24, 0x34	; 52
+  68:	82 60       	ori	r24, 0x02	; 2
+  6a:	84 bf       	out	0x34, r24	; 52
+  6c:	84 b7       	in	r24, 0x34	; 52
+  6e:	81 60       	ori	r24, 0x01	; 1
+  70:	84 bf       	out	0x34, r24	; 52
+  72:	8b b7       	in	r24, 0x3b	; 59
+  74:	80 64       	ori	r24, 0x40	; 64
+  76:	8b bf       	out	0x3b, r24	; 59
+  78:	08 95       	ret
+
+0000007a <__vector_1>:
+  7a:	1f 92       	push	r1
+  7c:	0f 92       	push	r0
+  7e:	0f b6       	in	r0, 0x3f	; 63
+  80:	0f 92       	push	r0
+  82:	11 24       	eor	r1, r1
+  84:	0f 90       	pop	r0
+  86:	0f be       	out	0x3f, r0	; 63
+  88:	0f 90       	pop	r0
+  8a:	1f 90       	pop	r1
+  8c:	18 95       	reti
+
+0000008e <__vector_default>:
+  8e:	1f 92       	push	r1
+  90:	0f 92       	push	r0
+  92:	0f b6       	in	r0, 0x3f	; 63
+  94:	0f 92       	push	r0
+  96:	11 24       	eor	r1, r1
+  98:	0f 90       	pop	r0
+  9a:	0f be       	out	0x3f, r0	; 63
+  9c:	0f 90       	pop	r0
+  9e:	1f 90       	pop	r1
+  a0:	18 95       	reti
+
+000000a2 <Timer_Init>:
+  a2:	23 b7       	in	r18, 0x33	; 51
+  a4:	2b 7f       	andi	r18, 0xFB	; 251
+  a6:	23 bf       	out	0x33, r18	; 51
+  a8:	23 b7       	in	r18, 0x33	; 51
+  aa:	22 60       	ori	r18, 0x02	; 2
+  ac:	23 bf       	out	0x33, r18	; 51
+  ae:	23 b7       	in	r18, 0x33	; 51
+  b0:	21 60       	ori	r18, 0x01	; 1
+  b2:	23 bf       	out	0x33, r18	; 51
+  b4:	29 b7       	in	r18, 0x39	; 57
+  b6:	21 60       	ori	r18, 0x01	; 1
+  b8:	29 bf       	out	0x39, r18	; 57
+  ba:	20 e0       	ldi	r18, 0x00	; 0
+  bc:	3a ef       	ldi	r19, 0xFA	; 250
+  be:	40 e0       	ldi	r20, 0x00	; 0
+  c0:	50 e0       	ldi	r21, 0x00	; 0
+  c2:	47 d0       	rcall	.+142    	; 0x152 <__udivmodsi4>
+  c4:	20 93 64 00 	sts	0x0064, r18	; 0x800064 <TIMER0_OVF_COMPENSATE>
+  c8:	20 95       	com	r18
+  ca:	22 bf       	out	0x32, r18	; 50
+  cc:	08 95       	ret
+
+000000ce <__vector_9>:
+  ce:	1f 92       	push	r1
+  d0:	0f 92       	push	r0
+  d2:	0f b6       	in	r0, 0x3f	; 63
+  d4:	0f 92       	push	r0
+  d6:	11 24       	eor	r1, r1
+  d8:	8f 93       	push	r24
+  da:	9f 93       	push	r25
+  dc:	af 93       	push	r26
+  de:	bf 93       	push	r27
+  e0:	80 91 64 00 	lds	r24, 0x0064	; 0x800064 <TIMER0_OVF_COMPENSATE>
+  e4:	80 95       	com	r24
+  e6:	82 bf       	out	0x32, r24	; 50
+  e8:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__data_end>
+  ec:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__data_end+0x1>
+  f0:	a0 91 62 00 	lds	r26, 0x0062	; 0x800062 <__data_end+0x2>
+  f4:	b0 91 63 00 	lds	r27, 0x0063	; 0x800063 <__data_end+0x3>
+  f8:	01 96       	adiw	r24, 0x01	; 1
+  fa:	a1 1d       	adc	r26, r1
+  fc:	b1 1d       	adc	r27, r1
+  fe:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__data_end>
+ 102:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__data_end+0x1>
+ 106:	a0 93 62 00 	sts	0x0062, r26	; 0x800062 <__data_end+0x2>
+ 10a:	b0 93 63 00 	sts	0x0063, r27	; 0x800063 <__data_end+0x3>
+ 10e:	bf 91       	pop	r27
+ 110:	af 91       	pop	r26
+ 112:	9f 91       	pop	r25
+ 114:	8f 91       	pop	r24
+ 116:	0f 90       	pop	r0
+ 118:	0f be       	out	0x3f, r0	; 63
+ 11a:	0f 90       	pop	r0
+ 11c:	1f 90       	pop	r1
+ 11e:	18 95       	reti
+
+00000120 <USART_Transmit_char>:
+ 120:	5d 9b       	sbis	0x0b, 5	; 11
+ 122:	fe cf       	rjmp	.-4      	; 0x120 <USART_Transmit_char>
+ 124:	8c b9       	out	0x0c, r24	; 12
+ 126:	08 95       	ret
+
+00000128 <main>:
 
 
 int main(void)
 {
-  38:	ff cf       	rjmp	.-2      	; 0x38 <main>
+	// 	DDRB=0XFF;
+	EXTI_Init();
+ 128:	9a df       	rcall	.-204    	; 0x5e <EXTI_Init>
+	Timer_Init(F_CPU);
+ 12a:	60 e0       	ldi	r22, 0x00	; 0
+ 12c:	74 e2       	ldi	r23, 0x24	; 36
+ 12e:	84 ef       	ldi	r24, 0xF4	; 244
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	b7 df       	rcall	.-146    	; 0xa2 <Timer_Init>
+	}
+}
 
-0000003a <_exit>:
-  3a:	f8 94       	cli
+void USART_Init(uint32_t fosc, uint16_t bps){
+	uint16_t temp;									//bps 계산 공간
+	UCSRB = (1<<RXEN) | (1<<TXEN);
+ 134:	88 e1       	ldi	r24, 0x18	; 24
+ 136:	8a b9       	out	0x0a, r24	; 10
+	temp = fosc/(bps*16) - 1;						//UBBR에 넣을 bps값 계산
+	UBRRH = (temp>>8) & 0b11111111;					//UBRR0H에 bps값 대입
+ 138:	81 e0       	ldi	r24, 0x01	; 1
+ 13a:	80 bd       	out	0x20, r24	; 32
+	UBRRL = temp & 0b11111111;						//UBRR0L에 bps값 대입
+ 13c:	8f e9       	ldi	r24, 0x9F	; 159
+ 13e:	89 b9       	out	0x09, r24	; 9
+	{
+		// 		PORTB = 0b00001111;
+		// 		_delay_ms(1000);
+		// 		PORTB = 0b11110000;
+		// 		_delay_ms(1000);
+		USART_Transmit_char('A');
+ 140:	81 e4       	ldi	r24, 0x41	; 65
+ 142:	ee df       	rcall	.-36     	; 0x120 <USART_Transmit_char>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
 
-0000003c <__stop_program>:
-  3c:	ff cf       	rjmp	.-2      	; 0x3c <__stop_program>
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 144:	8f e3       	ldi	r24, 0x3F	; 63
+ 146:	9c e9       	ldi	r25, 0x9C	; 156
+ 148:	01 97       	sbiw	r24, 0x01	; 1
+ 14a:	f1 f7       	brne	.-4      	; 0x148 <main+0x20>
+ 14c:	00 c0       	rjmp	.+0      	; 0x14e <main+0x26>
+ 14e:	00 00       	nop
+ 150:	f7 cf       	rjmp	.-18     	; 0x140 <main+0x18>
+
+00000152 <__udivmodsi4>:
+ 152:	a1 e2       	ldi	r26, 0x21	; 33
+ 154:	1a 2e       	mov	r1, r26
+ 156:	aa 1b       	sub	r26, r26
+ 158:	bb 1b       	sub	r27, r27
+ 15a:	fd 01       	movw	r30, r26
+ 15c:	0d c0       	rjmp	.+26     	; 0x178 <__udivmodsi4_ep>
+
+0000015e <__udivmodsi4_loop>:
+ 15e:	aa 1f       	adc	r26, r26
+ 160:	bb 1f       	adc	r27, r27
+ 162:	ee 1f       	adc	r30, r30
+ 164:	ff 1f       	adc	r31, r31
+ 166:	a2 17       	cp	r26, r18
+ 168:	b3 07       	cpc	r27, r19
+ 16a:	e4 07       	cpc	r30, r20
+ 16c:	f5 07       	cpc	r31, r21
+ 16e:	20 f0       	brcs	.+8      	; 0x178 <__udivmodsi4_ep>
+ 170:	a2 1b       	sub	r26, r18
+ 172:	b3 0b       	sbc	r27, r19
+ 174:	e4 0b       	sbc	r30, r20
+ 176:	f5 0b       	sbc	r31, r21
+
+00000178 <__udivmodsi4_ep>:
+ 178:	66 1f       	adc	r22, r22
+ 17a:	77 1f       	adc	r23, r23
+ 17c:	88 1f       	adc	r24, r24
+ 17e:	99 1f       	adc	r25, r25
+ 180:	1a 94       	dec	r1
+ 182:	69 f7       	brne	.-38     	; 0x15e <__udivmodsi4_loop>
+ 184:	60 95       	com	r22
+ 186:	70 95       	com	r23
+ 188:	80 95       	com	r24
+ 18a:	90 95       	com	r25
+ 18c:	9b 01       	movw	r18, r22
+ 18e:	ac 01       	movw	r20, r24
+ 190:	bd 01       	movw	r22, r26
+ 192:	cf 01       	movw	r24, r30
+ 194:	08 95       	ret
+
+00000196 <_exit>:
+ 196:	f8 94       	cli
+
+00000198 <__stop_program>:
+ 198:	ff cf       	rjmp	.-2      	; 0x198 <__stop_program>
